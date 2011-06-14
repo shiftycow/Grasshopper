@@ -1,0 +1,19 @@
+<perldata>
+    <arrayref>
+        <!--device definitions are defined below-->
+        <!--the first device description with a matching
+            key will be used
+        -->
+        <item key="0">
+            <hashref>
+                <item key="description">ATI AT 8000S</item>
+                <!--this driver needs to be in lib/drivers/-->
+                <item key="driver">ATI_AT8000S</item>
+                
+                <!--match clauses-->
+                <item key="sysDescr">AT-8000S</item>
+            </hashref>
+        </item>
+    </arrayref>
+</perldata>
+

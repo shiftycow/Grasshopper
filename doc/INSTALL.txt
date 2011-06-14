@@ -1,0 +1,184 @@
+Installation Instructions for the Grasshopper Network Management System
+
+Updated Jan 7, 2011
+
+READ THE ENTIRE SECTION that you will be following during install
+before starting the process, especially the one regarding Server Prep
+
+Grasshopper installation requires the creation of new users and directories
+that require root (or sudo) privileges on the target server.
+---------------------------------------------------------------------------
+
+Ubutnu Server 10.10
+
+Section 1. Server Setup
+--
+(skip this section if you have a running server with Apache)
+
+Install the base system as normal. When the "Software Selection" screen
+(`tasksel`) comes up, choose the following packages:
+
+    LAMP server
+    OpenSSH server
+
+Neither MySQL or PHP is required by Grasshopper, but the LAMP package
+takes care of installing and configuring Apache, which is. 
+
+Run `sudo apt-get update`, `sudo apt-get upgrade` and 
+`sudo apt-get dist-upgrade` after installation to make sure that the system
+has all current updates.
+
+Reboot to load the updated kernel.
+
+---------------------------------------------------------------------------
+Section 2. Server Prep
+--
+2.1 Dependencies
+--
+A few packages are neccesssary for Grasshopper to function. They can be
+installed from the Ubuntu repositories and CPAN using the commands below:
+
+    sudo apt-get install subversion
+    sudo apt-get install rrdtool
+    sudo apt-get install libsnmp-perl
+    sudo apt-get install librrds-perl
+    sudo apt-get install libxml-dumper-perl
+    sudo apt-get install libnet-snmp-perl
+    sudo cpan RRD::Simple
+
+Also recommended is Vim, which can be installed with the command:
+   
+   sudo apt-get install vim
+
+*Ubuntu Server ships with vim-tiny, which lacks some features.
+
+--
+2.2 User and installation directory
+--
+Grasshopper is deisgned to run in user space, so a new user and home
+directory should be created for it:
+
+    sudo useradd grasshopper
+    sudo mkdir /home/grasshopper
+    sudo chown grasshopper:grasshopper /home/grasshopper
+
+It is also required to change the shell of the grasshopper user to bash. 
+This can be done using the command
+
+    sudo vipw
+
+Towards the end of the file, there should be a line that looks similar to:
+    grasshopper:x:1001:1001::/home/grasshopper:/bin/sh
+
+Change the line to read:
+    grasshopper:x:1001:1001::/home/grasshopper:/bin/bash
+
+--
+2.3 Special Server requirements
+--
+Grasshopper is designed for high-performance data aquisition and processing
+In order to run effectively on large networks, the RRD files that
+Grasshopper uses to store data should be stored on a high-performance 
+storage medium such as a Solid State Drive (SSD) or a high-performance 
+Storage Area Network (SAN). If this is needed, create mount points for 
+the SSD or SAN and ensure that the user and/or group `grasshopper` has 
+write permissions.
+
+Note the mount point of the location where the RRD files will be located 
+for use in Section 3.
+
+Grasshopper also makes use of a RAM disk for temporary storage. Most Linux
+distributions provide /dev/shm for this purpose. Larger networks require
+more space on /dev/shm, so plan memory allocations accordingly. 
+---------------------------------------------------------------------------
+Section 3. Getting Grasshopper
+--
+Before installing Grasshopper, run `sudo su - grasshopper` to run as the 
+user that was just creaetd. You should also now be in the home directory
+that was just created, so check the path using the `pwd` command.
+
+The best way to get Grasshopper is to check out the latest release from the
+Subversion repository. From /home/grasshopper, run:
+
+    svn export svn+ssh://<username>@svnserver/svn/grasshopper .
+
+If the directory into which you are installing grasshopper is not empty, you
+might need to add the --force option to the export command:
+
+    svn export svn+ssh://<username>@svnserver/svn/grasshopper . --force
+
+---------------------------------------------------------------------------
+4. Configuring Grasshopper
+--
+
+4.1 grasshopper/data
+
+Move to the data directory:
+    
+    cd data
+
+The data directory is where grasshopper stores its RRDs, log files and host
+database backups. Inside this directory, there is a softlink called
+grasshopper_data. If you configured a special location for RRDs in
+Section 2.3, remap this link to that location:
+
+    rm grasshopper_data
+    ln -s /path/to/rrd/dir grasshopper_data
+
+If not, you can remove the link and use the data directory to store the RRD
+files:
+    
+    rm grasshopper_data
+    mkdir grasshopper_data
+
+--
+4.2 grasshopper/conf
+--
+Now move to the conf directory:
+    
+    cd ../conf
+
+This directory contains the configuration files for Grasshopper. The main
+file of interest is grasshopper.conf. You can change the location of various
+files and directories inside grasshopper.conf, but the default values
+should work fine. 
+
+Most likely, you will need to change the number of worker and rrd writing 
+threads to suit your server (setting is near the bottom). Below are some
+example settings:
+
+Intel Core2 Quad, SATA platter hard drive, 4GB RAM:
+MAX_WORKERS = 64
+MAX_RRD_WRITES = 8
+
+
+Intel Xeon, 16 cores, 32GB RAM, 1.5GBs PCI Express SSD card:
+MAX_WORKERS = 256
+MAX_RRD_WRITERS = 16
+
+Another setting that possible will need to be changed is the control ports.
+The threads within Grasshopper use local TCP ports to communicate with each
+other, and they do so on ports 7000 and 7001, by default. If you are running
+Grasshopper on an existing server and these ports are not free, it can be
+changed here.
+
+The TIMEOUT value can also be changed for slow networks. If a thread does
+not communicate with the main polling process for TIMEOUT seconds, 
+the poller assumes that something went wrong and stops the polling cycle. 
+
+--
+4.3 hosts.lst
+--
+The second configuration file of interest is hosts.lst. This file contains
+a list of hosts that Grasshopper should be polling. The list is a CSV file
+and is formatted like so:
+    
+    hostname,group description,group name
+
+The hostname is a hostname or IP address of the host to be polled.
+The data files are broken up into groups, as specified by 'group name'. 
+The 'group description' is used by the user interface to display an
+informative description of the group (building name, rack number, etc...).
+
+
+

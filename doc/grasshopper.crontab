@@ -1,0 +1,3 @@
+#example crontab entry for grasshopper
+*/5 * * * * /home/grasshopper/cli/grasshopper_control.pl start >/dev/null &2>1
+

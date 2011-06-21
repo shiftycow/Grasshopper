@@ -88,9 +88,8 @@ instructions, /home/grasshopper and the user `grasshopper` are used.
     sudo adduser grasshopper
     sudo su - grasshopper
 
-1. SVN checkout
-    cd /home/grasshopper
-    svn export svn+ssh://<username>@nocsvn/svn/grasshopper --force .
+1. Git Checkout
+    TODO: these instructions
 
 2. Download
     cd /home/grasshoper

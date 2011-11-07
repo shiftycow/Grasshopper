@@ -58,7 +58,7 @@ sub log {
     my ($msg,$level) = @_;
     $msg =~ s/\n/<BR>/g;
 
-    my $debug_level = GrasshopperConfig::get_config_element('debug_element');
+    my $debug_level = GrasshopperConfig::get_config_element('debug_level');
     return if($level > $debug_level);
 
     #`logger "[GRASSHOPPER] $msg"`;

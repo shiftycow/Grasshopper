@@ -234,7 +234,7 @@ while($listener = $sock->accept())
         #if we get a status report that a host is ready to be written to RRD,
         #add it to the rrd queue
         #
-        if($status_report =~ /#'([a-z0-9\-_]+)' XML ready#/)
+        if($status_report =~ /#'([A-z0-9\.\-_]+)' XML ready#/)
         {
             my $hostname = $1;
             #reset the timeout alarm
@@ -254,7 +254,7 @@ while($listener = $sock->accept())
         }#end rrd written
         
         #if we get a report that a host's RRD is done, add it back to the poll queue
-        if($status_report =~ /#'([a-z0-9\-_]+)' RRD ready#/)
+        if($status_report =~ /#'([A-z0-9\.\-_]+)' RRD ready#/)
         {
             #reset the timeout alarm
             alarm($timeout);

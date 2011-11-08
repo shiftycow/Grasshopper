@@ -106,7 +106,7 @@ while($listener = $sock->accept())
         }#end exit
 
         #returns a set of nodes to be sent to the UI
-        if($status_report =~ /#get_nodes '([a-zA-Z0-9\-_]+)'#/)
+        if($status_report =~ /#get_nodes '([A-z0-9\.\-_]+)'#/)
         {
             Logger::log("host database received node request",1);
             my $path = $1;

@@ -82,8 +82,9 @@ sub poll
     my $host_swap_dir = GrasshopperConfig::get_config_element("HOST_SWAP_DIR");
     #path is absolute because it will probably be in /dev/shm
 
-    my $session = new SNMP::Session(DestHost => $hostname, Community => 'public', Version => 1,
-             UseSprintValue => 1);
+    my $community = GrasshopperConfig::get_config_element("SNMP_COMMUNITY");
+    my $version = GrasshopperConfig::get_config_element("SNMP_VERSION");
+    my $session = new SNMP::Session(DestHost => $hostname, Community => $community, Version => $version, UseSprintValue => 1);
  
     return "session creation error: $SNMP::Session::ErrorStr" unless (defined $session);
 

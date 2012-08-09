@@ -159,7 +159,9 @@ sub get_system_table {
     
     my ($hostname,$group,$group_description) = @_;
 
-    my $session = new SNMP::Session(DestHost => $hostname, Community => 'public', Version => 1, UseSprintValue => 1);
+    my $community = GrasshopperConfig::get_config_element("SNMP_COMMUNITY");
+    my $version = GrasshopperConfig::get_config_element("SNMP_VERSION");
+    my $session = new SNMP::Session(DestHost => $hostname, Community => $community, Version => $version, UseSprintValue => 1);
     if($session eq undef)
     {
         Logger::log("session creation error: $SNMP::Session::ErrorStr");

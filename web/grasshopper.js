@@ -109,8 +109,8 @@ function load_host_tree(path,node)
     *  target element
     *
     ***************************************************************************/
-    var target = "#"+node+"-child"; //put the subtree into the node's child div
-    var parent_li = "#"+node+"-parent";
+    var target = "[id="+node+"-child]"; //put the subtree into the node's child div
+    var parent_li = "[id="+node+"-parent]";
 
     //mark the parent as loading
     $(parent_li).addClass("loading");
@@ -132,7 +132,7 @@ function toggle_subtree(path,node)
     *******************************************************/
     //load_host_tree(path,node);
 
-    var parent_li = "#"+node+"-parent";
+    var parent_li = "[id="+node+"-parent]";
     
     breadcrumb_trail(path,node);
     //if the subtree is already expanded, just collapse it
@@ -154,8 +154,8 @@ function toggle_list(identifier)
     /* expands/unexpands an element in a tree
     *
     ******************************************/
-    var parent_li = "#"+identifier+"-parent";
-    var child_ul = "#"+identifier+"-child";
+    var parent_li = "[id="+identifier+"-parent]";
+    var child_ul = "[id="+identifier+"-child]";
     
     if($(child_ul).hasClass("active"))
     {

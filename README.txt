@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 Contributing Authors:
-    Michael Harris (mharris@nmsu.edu)
+    Michael Harris (mharris@visgence.com)
     Evan Salazar (sevan@nmsu.edu)
 
 -------------------------------------------------------------------------------

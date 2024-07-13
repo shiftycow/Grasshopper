@@ -63,6 +63,11 @@ System
     Cron or similar task-scheduling program
     support for /dev/shm or other RAM disk and at least 1GB of available space
 
+Ubuntu 22.04
+    apt install build-essential rrdtool snmp libsnmp-base libsnmp-perl apache2 libxml-dumper-perl libsnmp-perl librrds-perl libcgi-pm-perl snmp-mibs-downloader
+    sudo cpan install RRD::Simple
+
+
 --
 -------------------------------------------------------------------------------
 --
@@ -96,11 +101,13 @@ instructions, /home/grasshopper and the user `grasshopper` are used.
     wget grasshoppernms.org/files/grasshopper.tar.gz
     <untar into .>
 
-3. make install
-    TODO: write install script for automatic configuration
+3. install mibs
+    sudo sed -i 's/mibs :/# mibs :/g' /etc/snmp/snmp.conf
+
 
 --
 -------------------------------------------------------------------------------
 --
 Section 4 - Configuration
+
 

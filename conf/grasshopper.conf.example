@@ -34,11 +34,11 @@ HOST_DATABASE_XML = data/grasshopperdb.xml
 DRIVER_MAP = conf/driver_map.xml
 
 #Default polling driver
-DEFAULT_DRIVER = GenericSwitch
+DEFAULT_DRIVER = GenericSwitch64
 
 #SNMP Setting
 SNMP_COMMUNITY = public
-SNMP_VERSION = 1
+SNMP_VERSION = 2
 
 
 # The Grasshopper log file

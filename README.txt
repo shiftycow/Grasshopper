@@ -64,7 +64,7 @@ System
     support for /dev/shm or other RAM disk and at least 1GB of available space
 
 Ubuntu 22.04
-    apt install build-essential rrdtool snmp libsnmp-base libsnmp-perl apache2 libxml-dumper-perl libsnmp-perl librrds-perl libcgi-pm-perl snmp-mibs-downloader
+    sudo apt install build-essential rrdtool snmp libsnmp-base libsnmp-perl apache2 libxml-dumper-perl libsnmp-perl librrds-perl libcgi-pm-perl snmp-mibs-downloader
     sudo cpan install RRD::Simple
 
 
@@ -89,25 +89,50 @@ Section 3 - Checkout/Installation
 The GrasshopperNMS should be given it's own directory and user. In these
 instructions, /home/grasshopper and the user `grasshopper` are used.
 
-0. User setup
+1. Install system dependencies (For ubuntu 22.04 use command above)
+
+2. install mibs
+    sudo sed -i 's/mibs :/# mibs :/g' /etc/snmp/snmp.conf
+
+3. User setup
     sudo adduser grasshopper
     sudo su - grasshopper
 
-1. Git Checkout
-    TODO: these instructions
+4. Git Checkout
+    git clone https://github.com/shiftycow/Grasshopper.git grasshopper
 
-2. Download
-    cd /home/grasshoper
-    wget grasshoppernms.org/files/grasshopper.tar.gz
-    <untar into .>
-
-3. install mibs
-    sudo sed -i 's/mibs :/# mibs :/g' /etc/snmp/snmp.conf
-
+5. Run dependencie test scrip to veriy everything needed is installed
+    perl ~/grasshopper/cli/test_scripts/dependency_check.pl
 
 --
 -------------------------------------------------------------------------------
 --
 Section 4 - Configuration
+
+# Run the following as root or with sudo
+
+1. Enable CGI in apache2
+    a2enmod cgid
+
+2. (Ubuntu) add user to www-data group
+    usermod -aG www-data grasshopper
+
+3. Symbolic link grasshopper data to /var/www/html
+    cd /var/www/html/
+    ln -s /home/grasshopper/grasshopper/
+
+4. Symbolic link grasshoper config to site-enabled
+    cd /etc/apache2/sites-enabled/
+    ln -s /home/grasshopper/grasshopper/conf/grasshopper-apache.conf
+
+5. Modify http conf as needed for virutal host domain and authors
+
+6. make sure /dev/shm/grasshopper_swap exist and is owned by grasshopper TODO: check what happends on reboot 
+    mkdir -p /dev/shm/grasshopper_swap
+    chown grasshopper:grasshoper /dev/shm/grasshopper_swap
+
+7. modify grasshoper/conf/grasshoper.conf, Most important add SNMP community, swap location above can be moved
+
+8. Add line in grasshoper/docs/grasshopper.crontab to grasshoper user's crontab
 
 

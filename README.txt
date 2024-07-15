@@ -101,6 +101,12 @@ instructions, /home/grasshopper and the user `grasshopper` are used.
 4. Git Checkout
     git clone https://github.com/shiftycow/Grasshopper.git grasshopper
 
+5. Copy config examples to configs
+    cd ~/grasshoper/conf
+    cp grasshopper.conf.example grasshopper.conf
+    cp grasshopper-apache.conf.example grasshopper-apache.conf
+    cp hosts.lst.example host.lst
+
 5. Run dependencie test scrip to veriy everything needed is installed
     perl ~/grasshopper/cli/test_scripts/dependency_check.pl
 

@@ -1,6 +1,6 @@
 conf/grasshopper.conf
 conf/grasshopper-apache.conf
-conf/host.lst
+conf/hosts.lst
 data/grasshopper.log
 data/grasshopper.log.*
 data/grasshopperdb.xml

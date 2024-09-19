@@ -9,6 +9,7 @@
 
                 <xsl:variable name="path" select="hashref/item[@key='path']" />
                 <xsl:variable name="description" select="hashref/item[@key='description']" />
+                <xsl:variable name="alias" select="hashref/item[@key='alias']" />
                 <xsl:variable name="data" select="hashref/item[@key='data']" />
                 <xsl:variable name="action" select="hashref/item[@key='action']" />
                 <xsl:variable name="node" select="@key" />
@@ -30,6 +31,10 @@
                                         </xsl:if>
 
                                         <xsl:value-of select="$data" />
+                                        
+					<xsl:if test="$alias != ''">
+                                         - <xsl:value-of select="$alias" />
+                                        </xsl:if>
                                     </a>
                                 </xsl:when>
                                 <xsl:otherwise>
@@ -40,6 +45,7 @@
                                     </xsl:if>
                                     
                                     <xsl:value-of select="$data" />
+				    
                                 </xsl:otherwise>
                             </xsl:choose>
                             

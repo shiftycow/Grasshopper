@@ -159,6 +159,7 @@ sub rrd
         $graph_info->{$port_number}->{'description'} = $description;
         $graph_info->{$port_number}->{'action'} = "load_port_info('$group','$hostname','index_".$ifdata->{'ifIndex'}.".rrd','$port_number','$description');";
         $graph_info->{$port_number}->{'sort_key'} = $ifdata->{'ifIndex'}; #a key to sort the indexes by
+	$graph_info->{$port_number}->{'alias'} = $ifdata->{'ifAlias'};
 
         #Logger::log("octetsIn: $octetsIn    octetsOut: $octetsOut");
         update_rrd($ifdata,$rrdpath);

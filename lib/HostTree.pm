@@ -115,7 +115,8 @@ sub get_nodes
             $return_nodes->{$node_name}->{"action"} = $walker->{$node_name}->{'action'};
             $return_nodes->{$node_name}->{"path"} = $path_string."_".$node_name;
             $return_nodes->{$node_name}->{"description"} = $walker->{$node_name}->{'description'};
-            $return_nodes->{$node_name}->{"sort_key"} = $walker->{$node_name}->{'sort_key'};
+            $return_nodes->{$node_name}->{"alias"} = $walker->{$node_name}->{'alias'};
+	    $return_nodes->{$node_name}->{"sort_key"} = $walker->{$node_name}->{'sort_key'};
         }
     }
 

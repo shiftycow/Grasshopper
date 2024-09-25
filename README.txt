@@ -67,7 +67,11 @@ Ubuntu 22.04
     sudo apt install build-essential rrdtool snmp libsnmp-base libsnmp-perl apache2 libxml-dumper-perl libsnmp-perl librrds-perl libcgi-pm-perl snmp-mibs-downloader
     sudo cpan install RRD::Simple
 
-
+Alma 9
+    dnf group install "Development Tools"
+    dnf install epel-release
+    dnf install rrdtool httpd cpan perl-XML-Dumper rrdtool-perl perl-CGI net-snmp-perl
+    cpan install RRD::Simple 
 --
 -------------------------------------------------------------------------------
 --
